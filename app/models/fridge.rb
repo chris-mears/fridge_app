@@ -1,4 +1,4 @@
 class Fridge < ApplicationRecord
-  has_many :foods
-  has_many :drinks
+  has_many :foods, dependent: :destroy
+  has_many :drinks, dependent: :destroy
 end
