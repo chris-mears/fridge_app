@@ -90,7 +90,9 @@ def run_drink_menu(fridge)
     fridge_id = fridge.id
     add_drink(fridge_id)
   elsif user_descision == 3
-    puts 3
+    id = fridge.id
+    drinks = fridge.drinks
+    take_sip(drinks, id)
   elsif user_descision == 4
     id = fridge.id
     drinks = fridge.drinks
@@ -122,13 +124,29 @@ def add_drink(fridge_id)
   checkout_fridge(fridge_id)
 end
 
+def take_sip(drinks, fridge_id)
+  drinsk = drinks
+  fridge_id = fridge_id
+  drinks.each do |drink|
+    puts "id:#{drink.id} - Food: #{drink.name} Amount: #{drink.size}"
+  end
+  puts "Which you like to take a sip of? Please typ id:"
+  drink_choice = gets.chomp.to_i
+  puts "How much?"
+  drink_amount = gets.chomp.to_i
+  drink = Drink.find(drink_choice)
+  size = drink.size - drink_amount
+  drink.update(size: size)
+  checkout_fridge(fridge_id)
+end
+
 def consume_drink(drinks, fridge_id)
   drinsk = drinks
   fridge_id = fridge_id
   drinks.each do |drink|
     puts "id:#{drink.id} - Food: #{drink.name}"
   end
-  puts "Which Food would you like to eat? Please typ id:"
+  puts "Which you like to Drink? Please type id:"
   drink_choice = gets.chomp.to_i
   Drink.find(drink_choice).delete
   checkout_fridge(fridge_id)
